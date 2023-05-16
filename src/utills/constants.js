@@ -51,5 +51,13 @@ export const columnTypes = {
     receipt: 'file',
     notes: 'string',
 };
+export const selectgroupby = [
+    { value: "monthyear", label: "Month Year" },
+    { value: "transactiontype", label: "Transaction Type" },
+    { value: "fromaccount", label: "From Account" },
+    { value: "toaccount", label: "To Account" },
+    { value: "amount", label: "Amount" },
+    { value: "none", label: "none" },
+  ];
 
 export const allowedFileTypes = ['image/png', 'image/jpg', 'image/jpeg']
