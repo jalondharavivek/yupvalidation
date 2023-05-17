@@ -47,6 +47,21 @@ const Mainfinance = () => {
     setGrp(true);
   }
 
+
+//   function deleterecord(delet_id) {
+//     console.log(delet_id,"delet_id");
+//     let deletedata = [...datastate];
+
+//    let filterdata = deletedata.filter(item => item.id !== delet_id)
+
+//    setDatastate(filterdata)
+
+// }
+
+useEffect(() => {
+  console.log(datastate,"dataaaaa");
+  setAlltransaction(datastate);
+}, [datastate]);
   return (
     <div>
       <div className="financetrackerheading">
@@ -92,7 +107,7 @@ const Mainfinance = () => {
             {Object.values(groupby).map((element, index) => (
               <div key={index}>
                 <h1>{Object.keys(groupby)[index]}</h1>
-                <Financetrackerform all={element} />
+                <Financetrackerform all={element}  />
               </div>
             ))}
           </div>

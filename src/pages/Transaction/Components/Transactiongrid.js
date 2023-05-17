@@ -17,7 +17,7 @@ const Financetrackerform = (prop) => {
 
   const [filterval, setFilval] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [delet, setDelet] = useState(0);
   const recordsPerPage = 3;
   const [records, setRecords] = useState([]);
   const [page, setPage] = useState(0);
@@ -71,6 +71,7 @@ const Financetrackerform = (prop) => {
         data = sorted;
       }
     }
+
     setRecords(data.slice(firstindex, lastindex));
     setPage(Math.ceil(data.length / recordsPerPage));
   }, [currentPage, alltransaction, filterval, shorto, order]);
@@ -82,10 +83,24 @@ const Financetrackerform = (prop) => {
   const addtransaction = () => {
     navigate("/addtransaction");
   };
+  
 
   useEffect(() => {
-    setAlltransaction(prop.all);
-  }, [prop]);
+    if (delet !== 0) {
+      console.log(delet, "");
+      setDatastate(datastate)
+      console.log(datastate,"viverk");
+      // setAlltransaction(datastate);
+
+      // setAlltransaction(prop.all);
+
+      setDelet(0);
+      console.log(delet, "logdelt");
+      console.log(datastate, "log0");
+    } else {
+      setAlltransaction(prop.all);
+    }
+  }, [prop, datastate]);
 
   //   // for (let key of Object.keys(sorted)) {
   //   //   return [key, sorted[key]];
@@ -148,13 +163,6 @@ const Financetrackerform = (prop) => {
     }
   };
 
-  //   // }
-  //   // const conv = Object.keys(sorted)
-  //   // conv.map((d,e)=>{
-  //   //   d.map((a,b) => {
-
-  //   //   });
-  //   // })
   // };
   const changepage = (id) => {
     setCurrentPage(id);
@@ -173,7 +181,16 @@ const Financetrackerform = (prop) => {
       i,
     });
   };
+  function deleterecord(delet_id) {
+    setDelet(delet_id);
+    console.log(delet_id, "delet_id");
+    let deletedata = [...prop.all];
+    console.log(deletedata, "prop");
+    let filterdata = deletedata.filter((item) => item.id !== delet_id);
 
+    console.log(filterdata, "vv");
+    setDatastate(filterdata);                                                                                                                                                                                                                                                                               
+  }
   return (
     <div className="maindisplay">
       <div className="addandgroupby">
@@ -258,7 +275,6 @@ const Financetrackerform = (prop) => {
                 )}
               </th>
               <th>Action </th>
-              <th>Action </th>
             </tr>
           </thead>
           <tbody>
@@ -278,19 +294,30 @@ const Financetrackerform = (prop) => {
                   <img src={addtransaction.receipt} className="imgwidth" />
                 </td> */}
                 <td>{addtransaction.notes}</td>
-                <td
-                  onClick={() =>
-                    viewd(addtransaction, index, addtransaction.receipt)
-                  }
-                >
-                  View
-                </td>
-                <td
-                  onClick={() =>
-                    editdata(addtransaction, index, addtransaction.receipt)
-                  }
-                >
-                  edit
+                <td>
+                  {" "}
+                  <p
+                    className="actionbutton"
+                    onClick={() =>
+                      viewd(addtransaction, index, addtransaction.receipt)
+                    }
+                  >
+                    View
+                  </p>
+                  <p
+                    className="actionbutton"
+                    onClick={() =>
+                      editdata(addtransaction, index, addtransaction.receipt)
+                    }
+                  >
+                    edit{" "}
+                  </p>
+                  <p
+                    className="actionbutton"
+                    onClick={() => deleterecord(addtransaction.id)}
+                  >
+                    Delete
+                  </p>
                 </td>
               </tr>
             ))}

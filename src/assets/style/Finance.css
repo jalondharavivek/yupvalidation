@@ -11,6 +11,8 @@
 }
 .financetrackerheading{
   padding-top: 50px;
+  display: inline-block;
+  margin-left: 800px;
 }
 
   .Tablefinancem{
@@ -130,4 +132,17 @@
   .addlogoutbuttonclass{
     display: table;
     margin-left: 350px;
+  }
+
+  .actionbutton {
+    background-color: #2f9dc9; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 5px;
+    cursor: pointer;
   }
