@@ -8,7 +8,7 @@ import { Formdata } from "../../../Context/context-transaction";
 import { useContext } from "react";
 
 // import AddTransaction from "./Addtransaction";
-const Financetrackerform = (prop) => {
+const Financetrackerform = (prop,deleterecord) => {
   const [alltransaction, setAlltransaction] = useState([]);
   const [sortprevalue, setPrevalue] = useState("");
   const [order, setOrder] = useState(0);
@@ -83,7 +83,7 @@ const Financetrackerform = (prop) => {
   const addtransaction = () => {
     navigate("/addtransaction");
   };
-  
+
 
   useEffect(() => {
     if (delet !== 0) {
@@ -181,16 +181,16 @@ const Financetrackerform = (prop) => {
       i,
     });
   };
-  function deleterecord(delet_id) {
-    setDelet(delet_id);
-    console.log(delet_id, "delet_id");
-    let deletedata = [...prop.all];
-    console.log(deletedata, "prop");
-    let filterdata = deletedata.filter((item) => item.id !== delet_id);
+  // function deleterecord(delet_id) {
+  //   setDelet(delet_id);
+  //   console.log(delet_id, "delet_id");
+  //   let deletedata = [...prop.all];
+  //   console.log(deletedata, "prop");
+  //   let filterdata = deletedata.filter((item) => item.id !== delet_id);
 
-    console.log(filterdata, "vv");
-    setDatastate(filterdata);                                                                                                                                                                                                                                                                               
-  }
+  //   console.log(filterdata, "vv");
+  //   setDatastate(filterdata);                                                                                                                                                                                                                                                                               
+  // }
   return (
     <div className="maindisplay">
       <div className="addandgroupby">
@@ -314,7 +314,7 @@ const Financetrackerform = (prop) => {
                   </p>
                   <p
                     className="actionbutton"
-                    onClick={() => deleterecord(addtransaction.id)}
+                    onClick={() => prop.deleterecord(addtransaction.id)}
                   >
                     Delete
                   </p>

@@ -11,10 +11,11 @@ import {
   } from "../../../utills/constants";
 const Mainfinance = () => {
   const { datastate, setDatastate } = useContext(Formdata);
-
+  const [grp, setGrp] = useState(false);
+  const [grpval, setGrpval] = useState();
   const [alltransaction, setAlltransaction] = useState([]);
   const [groupby, setGroupby] = useState([]);
-  const [grp, setGrp] = useState(false);
+  
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -29,38 +30,56 @@ const Mainfinance = () => {
     navigate("addtransaction");
   };
 
+  const groupBy = (array, key) => {
+    let groupbydata = array.reduce((grpres, curvaluegrp) => {
+      (grpres[curvaluegrp[key]] = grpres[curvaluegrp[key]] || []).push(
+        curvaluegrp
+      );
+      return grpres;
+    }, []);
+    return groupbydata;
+  };
+
   function group(event) {
+    setGrpval(event.target.value)
     const grouptype = event.target.value;
-
-    const groupBy = (array, key) => {
-      let groupbydata = array.reduce((result, currentValue) => {
-        (result[currentValue[key]] = result[currentValue[key]] || []).push(
-          currentValue
-        );
-        return result;
-      }, []);
-      return groupbydata;
-    };
-    const personGroupedByColor = groupBy(alltransaction, grouptype);
-
-    setGroupby(personGroupedByColor);
-    setGrp(true);
+    console.log(grouptype, "value");
   }
+  useEffect(() => {
+    if(grpval){
+    if (grpval === "none" || grpval === "") {
+      setGrp(false);
+    } else {
+      const valgrpdata = groupBy(alltransaction, grpval);
+      console.log(valgrpdata, "vivekdelet1logup");
+
+      setGroupby(valgrpdata);
+      setGrp(true);
+      setGrpval(grpval)
+    }
+}
+    
+  }, [grpval,alltransaction ]);
 
 
-//   function deleterecord(delet_id) {
-//     console.log(delet_id,"delet_id");
-//     let deletedata = [...datastate];
+  function deleterecord(delet_id) {
+    console.log(delet_id,"delet_id");
+    let deletedata = [...datastate];
 
-//    let filterdata = deletedata.filter(item => item.id !== delet_id)
+   let filterdata = deletedata.filter(item => item.id !== delet_id)
 
-//    setDatastate(filterdata)
+   setDatastate(filterdata)
+   
 
-// }
+}
+
+
+
 
 useEffect(() => {
   console.log(datastate,"dataaaaa");
   setAlltransaction(datastate);
+ 
 }, [datastate]);
   return (
     <div>
@@ -89,9 +108,7 @@ useEffect(() => {
             className="searchspan"
             onChange={group}
           >
-            <option value="default" disabled>
-              select......{" "}
-            </option>
+         
             {selectgroupby.map((key) => (
               <option key={key.label} value={key.value}>
                 {key.label}
@@ -107,13 +124,13 @@ useEffect(() => {
             {Object.values(groupby).map((element, index) => (
               <div key={index}>
                 <h1>{Object.keys(groupby)[index]}</h1>
-                <Financetrackerform all={element}  />
+                <Financetrackerform all={element} deleterecord={deleterecord} />
               </div>
             ))}
           </div>
         ) : (
           <div>
-            <Financetrackerform all={alltransaction} />
+            <Financetrackerform all={alltransaction}  deleterecord={deleterecord}/>
           </div>
         )}
       </div>
